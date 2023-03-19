@@ -11,20 +11,21 @@ services:
       - source: hapi
         target: /data/hapi/application.yaml
     volumes:
-      - ./persistent-data/web:/data/hapi
+      - ./data/web:/data/hapi
     environment:
       SPRING_CONFIG_LOCATION: 'file:///data/hapi/application.yaml'
   db:
-    image: postgres
+    image: postgres:alpine3.17
     restart: always
+    # privileged: true
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin # If changing default password, also update the spring.datasource.password field in application.yaml
       POSTGRES_DB: hapi
     ports:
       - "5432:5432"
-    volumes:
-      - ./persistent-data/db:/var/lib/postgresql/data
+    # volumes:
+    #   - ./data/db:/var/lib/postgresql/data
 configs:
   hapi:
      file: ./application.yaml

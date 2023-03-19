@@ -172,7 +172,7 @@ hapi:
     tester:
       home:
         name: Local Tester
-        server_address: 'http://127.0.0.1/fhir' # Change this to the IP or hostname of your server if not running locally
+        server_address: 'http://192.168.11.119/fhir' # Change this to the IP or hostname of your server if not running locally
         refuse_to_fetch_third_party_urls: false
         fhir_version: R4
       global:
