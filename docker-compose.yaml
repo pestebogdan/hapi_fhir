@@ -1,0 +1,30 @@
+version: '3'
+services:
+  web:
+    depends_on:
+      - db
+    image: "hapiproject/hapi:v6.4.0-tomcat"
+    restart: always
+    ports:
+      - "80:8080"
+    configs:
+      - source: hapi
+        target: /data/hapi/application.yaml
+    volumes:
+      - ./persistent-data/web:/data/hapi
+    environment:
+      SPRING_CONFIG_LOCATION: 'file:///data/hapi/application.yaml'
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin # If changing default password, also update the spring.datasource.password field in application.yaml
+      POSTGRES_DB: hapi
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./persistent-data/db:/var/lib/postgresql/data
+configs:
+  hapi:
+     file: ./application.yaml
